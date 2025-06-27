@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAHRAO - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 50px auto;
+            gap: 50px;
+        }
+        .box {
+            background-color: #4CAF50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .box:hover {
+            background-color: #45a049;
+        }
+        .product-list, .product-detail {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .product-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .product-list li {
+            margin: 10px 0;
+        }
+        .product-list a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .product-detail img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .product-info {
+            margin-top: 20px;
+        }
+        .product-info select, .product-info input, .product-info button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to PAHRAO</h1>
+</header>
+
+<div class="container">
+    <a href="#" onclick="showProducts()" class="box">Products</a>
+    <a href="#" onclick="showServices()" class="box">Services</a>
+</div>
+
+<div id="content"></div>
+
+<script>
+function showProducts() {
+    document.getElementById('content').innerHTML = `
+        <div class="product-list">
+            <h2>Products</h2>
+            <ul>
+                <li><a href="#" onclick="showProductDetail('Clothes')">Clothes</a></li>
+                <li><a href="#" onclick="showProductDetail('Shoes/Sneakers')">Shoes / Sneakers</a></li>
+                <li><a href="#" onclick="showProductDetail('Watches')">Watches</a></li>
+                <li><a href="#" onclick="showProductDetail('Perfumes')">Perfumes</a></li>
+            </ul>
+        </div>
+    `;
+}
+
+function showServices() {
+    document.getElementById('content').innerHTML = `
+        <div class="product-list">
+            <h2>Services</h2>
+            <p>Coming Soon...</p>
+        </div>
+    `;
+}
+
+function showProductDetail(category) {
+    document.getElementById('content').innerHTML = `
+        <div class="product-detail">
+            <h2>\${category}</h2>
+            <img src="https://via.placeholder.com/300" alt="\${category} Image">
+            <div class="product-info">
+                <p><strong>Price:</strong> ₹1999</p>
+                <p><strong>Description:</strong> High quality \${category} from PAHRAO collection.</p>
+                <label for="size">Size:</label>
+                <select id="size">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                    <option>XL</option>
+                </select>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" value="1" min="1">
+
+                <button>Add to Cart</button>
+            </div>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
