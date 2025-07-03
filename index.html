@@ -1,135 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAHRAO - Home</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            margin: 50px auto;
-            gap: 50px;
-        }
-        .box {
-            background-color: #4CAF50;
-            color: white;
-            padding: 30px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 1.5rem;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-        .box:hover {
-            background-color: #45a049;
-        }
-        .product-list, .product-detail {
-            width: 80%;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .product-list ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .product-list li {
-            margin: 10px 0;
-        }
-        .product-list a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-        .product-detail img {
-            max-width: 300px;
-            border-radius: 8px;
-        }
-        .product-info {
-            margin-top: 20px;
-        }
-        .product-info select, .product-info input, .product-info button {
-            margin-top: 10px;
-            padding: 8px;
-            width: 200px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pahrao - E-commerce Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Calibri', 'Georgia', 'Cambria', serif;
+    }
+    .logo-text {
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: #1f2937; /* gray-800 */
+    }
+    .header-link {
+      font-weight: 700;
+      color: #374151; /* gray-700 */
+      transition: color 0.3s;
+    }
+    .header-link:hover {
+      color: #2563eb; /* blue-600 */
+    }
+    .subcat-link {
+      cursor: pointer;
+      transition: color 0.25s ease;
+    }
+    .subcat-link:hover {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+    .card-description {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #4b5563; /* gray-600 */
+    }
+    .card-price {
+      font-weight: 700;
+      color: #059669; /* emerald-600 */
+    }
+    .btn-primary {
+      background-color: #2563eb;
+      color: white;
+      font-weight: 700;
+      border-radius: 0.375rem;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+    /* Add custom scrollbar for cart modal */
+    .cart-items::-webkit-scrollbar {
+      width: 8px;
+    }
+    .cart-items::-webkit-scrollbar-thumb {
+      background-color: #2563eb;
+      border-radius: 10px;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen flex flex-col">
 
-<header>
-    <h1>Welcome to PAHRAO</h1>
-</header>
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-30">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="logo-text select-none">Pahrao</div>
+      <nav class="flex space-x-6">
+        <a href="#" class="header-link" data-page="home" id="nav-home">Home</a>
+        <a href="#" class="header-link" data-page="products" id="nav-products">Products</a>
+        <a href="#" class="header-link" data-page="services" id="nav-services">Services</a>
+        <a href="#" class="header-link" data-page="contact" id="nav-contact">Contact Us</a>
+      </nav>
+      <button id="cart-btn" aria-label="Open Cart" class="btn-primary">Cart (<span id="cart-count">0</span>)</button>
+    </div>
+  </header>
 
-<div class="container">
-    <a href="#" onclick="showProducts()" class="box">Products</a>
-    <a href="#" onclick="showServices()" class="box">Services</a>
-</div>
+  <!-- Main Content -->
+  <main id="main-content" class="container mx-auto px-4 py-8 flex-grow">
 
-<div id="content"></div>
+    <!-- Home Page (default) -->
+    <section id="page-home" class="page-section">
+      <h1 class="text-4xl font-bold mb-6">Welcome to Pahrao</h1>
+      <p class="mb-4 text-lg leading-relaxed text-gray-700 max-w-3xl">
+        The moment of ultra confidence for your shopping experience.
+      </p>
+      <p class="mb-4 text-gray-600 italic max-w-3xl">
+        Explore Products and Services across multiple categories.
+      </p>
+      <p class="mb-1 font-semibold">Select below to begin:</p>
+      <ul class="list-disc list-inside text-blue-700 font-semibold">
+        <li><a href="#" class="header-link" data-page="products" id="home-products-link">Products</a></li>
+        <li><a href="#" class="header-link" data-page="services" id="home-services-link">Services</a></li>
+      </ul>
+      <div class="mt-8 text-sm text-gray-500">
+        Contact us - Email: thepahrao@gmail.com | Phone: 9893292820
+      </div>
+    </section>
 
-<script>
-function showProducts() {
-    document.getElementById('content').innerHTML = `
-        <div class="product-list">
-            <h2>Products</h2>
-            <ul>
-                <li><a href="#" onclick="showProductDetail('Clothes')">Clothes</a></li>
-                <li><a href="#" onclick="showProductDetail('Shoes/Sneakers')">Shoes / Sneakers</a></li>
-                <li><a href="#" onclick="showProductDetail('Watches')">Watches</a></li>
-                <li><a href="#" onclick="showProductDetail('Perfumes')">Perfumes</a></li>
-            </ul>
+    <!-- Products Page -->
+    <section id="page-products" class="page-section hidden">
+      <h2 class="text-3xl font-bold mb-5">Products</h2>
+      <p class="mb-4 text-gray-700">Choose a category to view:</p>
+      <nav class="mb-8 flex space-x-6 border-b pb-3">
+        <span class="subcat-link text-lg font-semibold" data-subcat="clothes">Clothes</span>
+        <span class="subcat-link text-lg font-semibold" data-subcat="shoes">Shoes & Sneakers</span>
+        <span class="subcat-link text-lg font-semibold" data-subcat="watches">Watches</span>
+        <span class="subcat-link text-lg font-semibold" data-subcat="perfumes">Perfumes</span>
+      </nav>
+
+      <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Product cards inserted here -->
+      </div>
+    </section>
+
+    <!-- Services Page -->
+    <section id="page-services" class="page-section hidden">
+      <h2 class="text-3xl font-bold mb-5">Services</h2>
+      <p class="italic text-lg text-gray-600">Sorry, we are working on this - Coming Soon.</p>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="page-contact" class="page-section hidden max-w-xl">
+      <h2 class="text-3xl font-bold mb-5">Contact Us</h2>
+      <p>Email: thepahrao@gmail.com</p>
+      <p>Phone: 9893292820</p>
+      <p class="mt-6 text-sm text-gray-500">© Pahrao 2025</p>
+    </section>
+
+  </main>
+
+  <!-- Product Detail Page -->
+  <section id="page-product-detail" class="page-section container mx-auto px-4 py-8 max-w-4xl hidden">
+    <button id="back-to-products" class="btn-primary mb-6">&larr; Back to Products</button>
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="product-image w-full md:w-1/2 flex items-center justify-center bg-white rounded shadow p-4">
+        <img id="detail-image" src="" alt="" class="max-w-full max-h-96 object-contain" onerror="this.onerror=null;this.src='https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/76a6e432-2eca-499c-affa-8ecbb74a09a9.png'" />
+      </div>
+      <div class="w-full md:w-1/2">
+        <h3 id="detail-title" class="text-2xl font-bold mb-3"></h3>
+        <p id="detail-description" class="card-description mb-4"></p>
+        <p id="detail-price" class="card-price text-xl mb-6"></p>
+        <label for="quantity" class="block mb-1 font-semibold">Quantity:</label>
+        <input type="number" id="quantity" min="1" value="1" class="border rounded px-3 py-2 w-20 mb-6" />
+        <button id="add-to-cart-btn" class="btn-primary px-6 py-3">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Modal -->
+  <div id="cart-modal" 
+       class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden" aria-modal="true" role="dialog" aria-labelledby="cart-title">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-lg max-h-[85vh] overflow-y-auto p-6 relative">
+      <h3 class="text-2xl font-bold mb-4" id="cart-title">Shopping Cart</h3>
+      <button id="close-cart-btn" class="absolute top-4 right-4 text-gray-600 font-bold text-xl" aria-label="Close Cart">&times;</button>
+      <div class="cart-items divide-y divide-gray-300 max-h-80 overflow-y-auto mb-4">
+        <!-- Cart items here -->
+      </div>
+      <p id="cart-empty-msg" class="text-center italic text-gray-500">Your cart is empty.</p>
+      <div class="border-t pt-4 flex justify-between items-center font-semibold text-lg">
+        <span>Total:</span>
+        <span id="cart-total-price" class="text-emerald-600">$0.00</span>
+      </div>
+      <button id="place-order-btn" class="btn-primary mt-6 w-full py-3" disabled>Place Order</button>
+    </div>
+  </div>
+
+  <script>
+    // Data for products demo mimicking big brands and Amazon style for descriptions
+    const productsData = {
+      clothes: [
+        {
+          id: 'c1',
+          category: 'clothes',
+          title: 'Classic Blue T-Shirt',
+          description: 'Premium quality cotton t-shirt, soft and breathable. Available in multiple sizes.',
+          price: 19.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3cf76d4b-8cb5-4beb-b8f6-a562b89cdaad.png'
+        },
+        {
+          id: 'c2',
+          category: 'clothes',
+          title: 'Regular Fit Jeans',
+          description: 'Durable denim with comfortable regular fit. Perfect for everyday wear.',
+          price: 49.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e14ce7af-53c9-466a-b51c-ebf241d0b476.png'
+        },
+        {
+          id: 'c3',
+          category: 'clothes',
+          title: 'Big Brand White Shirt',
+          description: 'Elegant white shirt, tailored fit for a crisp professional style.',
+          price: 34.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/085a7b01-7110-41eb-900a-59a6910e2547.png'
+        }
+      ],
+      shoes: [
+        {
+          id: 's1',
+          category: 'shoes',
+          title: 'Sporty Sneakers',
+          description: 'Lightweight and comfortable sneakers from a trusted brand.',
+          price: 89.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e57f2c46-b086-4fb7-9af6-b4eea6281676.png'
+        },
+        {
+          id: 's2',
+          category: 'shoes',
+          title: 'Casual Running Shoes',
+          description: 'Durable cushioning with breathable mesh fabric.',
+          price: 69.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d447b0ae-fbd9-46f0-8be5-596b1bab7986.png'
+        }
+      ],
+      watches: [
+        {
+          id: 'w1',
+          category: 'watches',
+          title: 'Luxury Watch Series X',
+          description: 'Feature-rich luxury wristwatch crafted with precision.',
+          price: 250.00,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fae107bb-220e-40e5-aabc-b65b6b2a3e70.png'
+        },
+        {
+          id: 'w2',
+          category: 'watches',
+          title: 'Sports Watch Pro',
+          description: 'Water resistant with stopwatch functionality.',
+          price: 120.00,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7aadbc08-dfcd-44fa-a122-a934fbc2c02e.png'
+        }
+      ],
+      perfumes: [
+        {
+          id: 'p1',
+          category: 'perfumes',
+          title: 'Signature Scent by Big Brand',
+          description: 'Long-lasting fragrance featuring warm and floral notes.',
+          price: 79.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9c1226bb-17f8-4914-ba85-313cbe17c1cc.png'
+        },
+        {
+          id: 'p2',
+          category: 'perfumes',
+          title: 'Fresh Citrus Perfume',
+          description: 'Energizing fragrance with hints of citrus and wood.',
+          price: 59.99,
+          image: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6d842751-a9e4-4a5d-a1fd-f30b9a4d2e37.png'
+        }
+      ]
+    };
+
+    // State
+    let currentPage = 'home';
+    let currentSubcategory = null;
+    let cart = [];
+
+    // Elements cache
+    const pages = {
+      home: document.getElementById('page-home'),
+      products: document.getElementById('page-products'),
+      services: document.getElementById('page-services'),
+      contact: document.getElementById('page-contact'),
+      productDetail: document.getElementById('page-product-detail')
+    };
+    const navLinks = document.querySelectorAll('nav a.header-link');
+    const productList = document.getElementById('product-list');
+    const cartBtn = document.getElementById('cart-btn');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCartBtn = document.getElementById('close-cart-btn');
+    const cartCountSpan = document.getElementById('cart-count');
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartTotalPrice = document.getElementById('cart-total-price');
+    const cartEmptyMsg = document.getElementById('cart-empty-msg');
+    const placeOrderBtn = document.getElementById('place-order-btn');
+
+    // Product detail elements
+    const detailImage = document.getElementById('detail-image');
+    const detailTitle = document.getElementById('detail-title');
+    const detailDescription = document.getElementById('detail-description');
+    const detailPrice = document.getElementById('detail-price');
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const quantityInput = document.getElementById('quantity');
+    const backToProductsBtn = document.getElementById('back-to-products');
+
+    // Navigation handlers
+    function showPage(pageName) {
+      currentPage = pageName;
+      for (const key in pages) {
+        if (pages.hasOwnProperty(key)) {
+          pages[key].classList.toggle('hidden', key !== pageName);
+        }
+      }
+      if (pageName === 'products') {
+        currentSubcategory = null;
+        productList.innerHTML = '<p class="text-gray-600 italic">Please select a category above to see products.</p>';
+      }
+      if(pageName === 'productDetail') {
+        // disable "Place Order" on detail view
+        placeOrderBtn.disabled = true;
+      }
+      if(pageName !== 'productDetail') {
+        addToCartBtn.disabled = false;
+        quantityInput.value = 1;
+      }
+      // Update nav active states
+      navLinks.forEach(link => link.classList.toggle('text-blue-600', link.dataset.page === pageName));
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const pg = e.target.dataset.page;
+        if (pg === 'services') {
+          showPage('services');
+        } else if (pg === 'products') {
+          showPage('products');
+        } else if (pg === 'contact') {
+          showPage('contact');
+        } else {
+          showPage('home');
+        }
+      });
+    });
+
+    // Home page quick links
+    document.getElementById('home-products-link').addEventListener('click', e => {
+      e.preventDefault();
+      showPage('products');
+    });
+    document.getElementById('home-services-link').addEventListener('click', e => {
+      e.preventDefault();
+      showPage('services');
+    });
+
+    // Product subcategory click handler
+    document.querySelectorAll('#page-products .subcat-link').forEach(el => {
+      el.addEventListener('click', e => {
+        const selected = e.target.dataset.subcat;
+        currentSubcategory = selected;
+        renderProducts(selected);
+      });
+    });
+
+    // Render products for a subcategory
+    function renderProducts(subcat) {
+      const prods = productsData[subcat];
+      if (!prods) {
+        productList.innerHTML = '<p class="italic text-gray-500">No products found.</p>';
+        return;
+      }
+      productList.innerHTML = prods.map(productCard).join('');
+      // Attach click listeners for detail view
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', e => {
+          const id = card.dataset.productId;
+          openProductDetail(id);
+        });
+      });
+    }
+
+    // Product card template
+    function productCard(prod) {
+      return `
+        <article class="product-card bg-white rounded-lg shadow hover:shadow-lg cursor-pointer p-4 flex flex-col" data-product-id="${prod.id}" tabindex="0" role="button" aria-pressed="false" aria-label="View details for ${prod.title}">
+          <img src="${prod.image}" alt="Image of ${prod.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x400?text=Image+Not+Available'" class="mb-4 rounded-lg object-contain max-h-48 w-full" />
+          <h3 class="font-bold text-lg mb-1 text-gray-900">${prod.title}</h3>
+          <p class="card-description flex-grow">${prod.description}</p>
+          <p class="card-price mt-3 text-emerald-600">$${prod.price.toFixed(2)}</p>
+        </article>
+      `;
+    }
+
+    // Open product detail view
+    let lastProductDetailId = null;
+    function openProductDetail(productId) {
+      const prod = findProductById(productId);
+      if (!prod) return;
+      lastProductDetailId = productId;
+      detailImage.src = prod.image;
+      detailImage.alt = `Image of ${prod.title}`;
+      detailTitle.textContent = prod.title;
+      detailDescription.textContent = prod.description;
+      detailPrice.textContent = `$${prod.price.toFixed(2)}`;
+      quantityInput.value = 1;
+      showPage('productDetail');
+    }
+
+    // Find product by id from all categories
+    function findProductById(id) {
+      for (const cat in productsData) {
+        if (productsData.hasOwnProperty(cat)) {
+          const found = productsData[cat].find(p => p.id === id);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+
+    // Back to products button on product detail page
+    backToProductsBtn.addEventListener('click', () => {
+      showPage('products');
+      if(currentSubcategory) {
+        renderProducts(currentSubcategory);
+      } else {
+        productList.innerHTML = '<p class="text-gray-600 italic">Please select a category above to see products.</p>';
+      }
+    });
+
+    // Cart management
+    cartBtn.addEventListener('click', () => {
+      renderCart();
+      cartModal.classList.remove('hidden');
+      cartModal.focus();
+    });
+    closeCartBtn.addEventListener('click', () => {
+      cartModal.classList.add('hidden');
+    });
+    cartModal.addEventListener('click', e => {
+      if (e.target === cartModal) {
+        cartModal.classList.add('hidden');
+      }
+    });
+
+    // Add to cart button in product detail
+    addToCartBtn.addEventListener('click', () => {
+      const qty = parseInt(quantityInput.value);
+      if (isNaN(qty) || qty < 1) {
+        alert('Please enter a valid quantity (1 or more).');
+        return;
+      }
+      const prod = findProductById(lastProductDetailId);
+      if (!prod) {
+        alert('Product not found.');
+        return;
+      }
+      addToCart(prod, qty);
+      alert(`Added ${qty} x "${prod.title}" to cart.`);
+    });
+
+    // Add product to cart with quantity
+    function addToCart(product, quantity) {
+      const idx = cart.findIndex(item => item.id === product.id);
+      if (idx >= 0) {
+        cart[idx].quantity += quantity;
+      } else {
+        cart.push({...product, quantity});
+      }
+      updateCartCount();
+    }
+
+    // Update cart count display in header
+    function updateCartCount() {
+      let totalCount = 0;
+      for (const item of cart) {
+        totalCount += item.quantity;
+      }
+      cartCountSpan.textContent = totalCount;
+    }
+
+    // Render cart items in modal
+    function renderCart() {
+      if(cart.length === 0) {
+        cartItemsContainer.innerHTML = '';
+        cartEmptyMsg.style.display = 'block';
+        placeOrderBtn.disabled = true;
+        cartTotalPrice.textContent = '$0.00';
+        return;
+      }
+      cartEmptyMsg.style.display = 'none';
+      placeOrderBtn.disabled = false;
+      cartItemsContainer.innerHTML = cart.map(cartItemTemplate).join('');
+      updateCartTotal();
+
+      // Attach delete and qty change handlers for cart items
+      document.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const id = e.target.dataset.id;
+          removeFromCart(id);
+        });
+      });
+      document.querySelectorAll('.cart-item-qty').forEach(input => {
+        input.addEventListener('change', e => {
+          const id = e.target.dataset.id;
+          let q = parseInt(e.target.value);
+          if(isNaN(q) || q < 1) q = 1;
+          updateCartQuantity(id, q);
+          renderCart();
+        });
+      });
+    }
+
+    // Cart item template
+    function cartItemTemplate(item) {
+      return `
+        <div class="cart-item flex justify-between items-center py-3" >
+          <div class="flex-grow">
+            <p class="font-semibold text-gray-900">${item.title}</p>
+            <p class="text-sm text-gray-600">$${item.price.toFixed(2)} each</p>
+          </div>
+          <input type="number" min="1" value="${item.quantity}" data-id="${item.id}" class="cart-item-qty border rounded w-16 px-2 py-1 mr-4" aria-label="Quantity for ${item.title}" />
+          <p class="w-20 font-semibold text-emerald-600">$${(item.price * item.quantity).toFixed(2)}</p>
+          <button data-id="${item.id}" class="cart-item-remove text-red-600 font-bold ml-3" aria-label="Remove ${item.title} from cart">&times;</button>
         </div>
-    `;
-}
+      `;
+    }
 
-function showServices() {
-    document.getElementById('content').innerHTML = `
-        <div class="product-list">
-            <h2>Services</h2>
-            <p>Coming Soon...</p>
-        </div>
-    `;
-}
+    // Remove item from cart by product id
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      updateCartCount();
+      renderCart();
+    }
 
-function showProductDetail(category) {
-    document.getElementById('content').innerHTML = `
-        <div class="product-detail">
-            <h2>\${category}</h2>
-            <img src="https://via.placeholder.com/300" alt="\${category} Image">
-            <div class="product-info">
-                <p><strong>Price:</strong> ₹1999</p>
-                <p><strong>Description:</strong> High quality \${category} from PAHRAO collection.</p>
-                <label for="size">Size:</label>
-                <select id="size">
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
-                    <option>XL</option>
-                </select>
+    // Update quantity for an item in cart
+    function updateCartQuantity(id, quantity) {
+      const item = cart.find(i => i.id === id);
+      if(item) {
+        item.quantity = quantity;
+      }
+      updateCartCount();
+    }
 
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" value="1" min="1">
+    // Calculate and update total cart price
+    function updateCartTotal() {
+      let total = 0;
+      for (const item of cart) {
+        total += item.price * item.quantity;
+      }
+      cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+    }
 
-                <button>Add to Cart</button>
-            </div>
-        </div>
-    `;
-}
-</script>
+    // Place order button action
+    placeOrderBtn.addEventListener('click', () => {
+      if(cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      const name = prompt("Enter your first name:");
+      if (!name) return alert("Order cancelled: Name is required.");
+      const lastName = prompt("Enter your last name:");
+      if (!lastName) return alert("Order cancelled: Last name is required.");
+      const mobile = prompt("Enter your mobile phone number:");
+      if (!mobile) return alert("Order cancelled: Mobile number is required.");
+      const address = prompt("Enter your delivery address:");
+      if (!address) return alert("Order cancelled: Address is required.");
+      const payment = prompt("Enter payment mode (e.g. Credit Card, UPI, COD):");
+      if (!payment) return alert("Order cancelled: Payment mode is required.");
+
+      alert(
+        `Order placed successfully!\n\nName: ${name} ${lastName}\nMobile: ${mobile}\nAddress: ${address}\nPayment mode: ${payment}\n\nThank you for shopping with Pahrao!`
+      );
+      cart = [];
+      updateCartCount();
+      renderCart();
+      cartModal.classList.add('hidden');
+      showPage('home');
+    });
+
+    // Startup
+    showPage('home');
+    updateCartCount();
+
+  </script>
 
 </body>
 </html>
+
